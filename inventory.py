@@ -1,9 +1,14 @@
-from tabulate import tabulate
+from tabulate import tabulate 
+import os
 
 END_COLOR = "\033[0m"
 RED_COLOR = "\033[31m"
 UNDERLINE_STYLE = "\033[4m"
 GREEN_COLOR = "\033[32m"
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+rel_path = "inventory.txt"
+abs_file_path = os.path.join(script_dir, rel_path)
 
 # Define the Shoe class
 class Shoe:
@@ -29,7 +34,7 @@ shoe_list = []
 # Function to read data from the inventory file
 def read_shoes_data():
     try:
-        with open("inventory.txt", "r") as file:
+        with open(abs_file_path, "r") as file:
             next(file)  # Skip the first line
             for line in file:
                 if line.strip():  # Ensure it's not an empty line
