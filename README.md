@@ -1,5 +1,4 @@
 # Shoe Store Stock Panel 👟
-# THIS IS A TEST BTW
 
 ## Table of Contents
 
@@ -20,7 +19,7 @@ To install and run this project locally, follow these steps:
 
 1. **Clone the repository in your terminal/command prompt**:
 
-  - Make sure you have created a temporary folder for this repository.
+    - Make sure you have created a temporary folder for this repository.
 
    ```sh
    git clone https://github.com/ethanlewis938/Shoe_Store_Manager
