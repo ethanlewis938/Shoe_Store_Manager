@@ -1,11 +1,13 @@
 from tabulate import tabulate
 import os
 
+# Color and style codes for terminal output
 END_COLOR = "\033[0m"
 RED_COLOR = "\033[31m"
 UNDERLINE_STYLE = "\033[4m"
 GREEN_COLOR = "\033[32m"
 
+# Paths to the script and inventory file
 script_directory = os.path.dirname(os.path.abspath(__file__))
 relative_path = "inventory.txt"
 absolute_file_path = os.path.join(script_directory, relative_path)
@@ -35,7 +37,7 @@ shoes_list = []
 def read_shoes_data():
     try:
         with open(absolute_file_path, "r") as file:
-            next(file)  # Skip the first line
+            next(file)  # Skip the first line (header)
             for line in file:
                 if line.strip():  # Ensure it's not an empty line
                     country, code, product, cost, quantity = line.strip().split(",")
@@ -49,6 +51,7 @@ def read_shoes_data():
 def capture_shoes():
     try:
         while True:
+            # Get input from user and validate it
             user_country = input("Please enter the country of where the shoe is from: ")
             if not user_country.isalpha():
                 print(f"{RED_COLOR}[INVALID INPUT]{END_COLOR} Country must contain only letters!")
@@ -66,6 +69,7 @@ def capture_shoes():
                         if not user_shoe_quantity.isdigit():
                             print(f"{RED_COLOR}[INVALID INPUT]{END_COLOR} Quantity must be a whole number!")
                         else:
+                            # Write new shoe data to file and append to list
                             with open("inventory.txt", "a") as file:
                                 shoe = Shoe(user_country, user_shoe_code, user_product_name, user_shoe_cost, user_shoe_quantity)
                                 file.write(f"\n{user_country},{user_shoe_code},{user_product_name},{user_shoe_cost},{user_shoe_quantity}")
@@ -79,8 +83,10 @@ def capture_shoes():
 def view_all():
     headers = ["Country", "Code", "Product", "Cost", "Quantity"]
     shoe_data = []
+    # Collect shoe data for display
     for shoe in shoes_list:
         shoe_data.append([shoe.country, shoe.code, shoe.product, shoe.cost, shoe.quantity])
+    # Display shoe data in table format
     print(tabulate(shoe_data, headers=headers))
 
 # Function to restock shoes
@@ -157,9 +163,11 @@ def highest_qty():
     most_stocked_shoe = None
     highest_quantity = float('-inf')
 
+    # Read all lines from the file
     with open("inventory.txt", "r") as file:
         lines = file.readlines()
 
+    # Find the shoe with the highest quantity
     for line in lines[1:]:  # Skip the header line
         country, code, product, cost, quantity = line.strip().split(",")
         quantity = int(quantity)
@@ -167,7 +175,7 @@ def highest_qty():
             highest_quantity = quantity
             most_stocked_shoe = [country, code, product, cost, quantity]
 
-    print(f"Shoe:{most_stocked_shoe[2]} is for sale for ${most_stocked_shoe[3]}")
+    print(f"Shoe: {most_stocked_shoe[2]} is for sale for ${most_stocked_shoe[3]}")
 
 # Function to display the main menu
 def main_menu():
